@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=2]
+[gd_scene load_steps=62 format=2]
 
 [ext_resource path="res://Common/Hitbox.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
@@ -11,6 +11,13 @@
 [ext_resource path="res://Player/Audio/hit.wav" type="AudioStream" id=9]
 [ext_resource path="res://Lighting/light.png" type="Texture" id=10]
 [ext_resource path="res://Player/Audio/burning.wav" type="AudioStream" id=11]
+[ext_resource path="res://Player/Player.gdshader" type="Shader" id=12]
+
+[sub_resource type="ShaderMaterial" id=50]
+resource_local_to_scene = true
+shader = ExtResource( 12 )
+shader_param/flash_color = Color( 1, 0, 0, 1 )
+shader_param/flash_modifier = 0.753
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 1.0
@@ -692,6 +699,7 @@ max_health = 5
 texture = ExtResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="."]
+material = SubResource( 50 )
 position = Vector2( 0, -5 )
 texture = ExtResource( 3 )
 hframes = 32
@@ -750,6 +758,8 @@ collision_layer = 4
 position = Vector2( 0, -4 )
 shape = SubResource( 47 )
 
+[node name="FlashTimer" type="Timer" parent="Hurtbox"]
+
 [node name="Footsteps" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )
 
@@ -777,14 +787,17 @@ stream = ExtResource( 11 )
 
 [node name="Light2D" type="Light2D" parent="."]
 light_mask = 3
+enabled = false
 texture = ExtResource( 10 )
 texture_scale = 2.0
 color = Color( 0.894118, 0.686275, 0.501961, 1 )
 energy = 1.25
 range_item_cull_mask = 3
 shadow_enabled = true
+shadow_color = Color( 1, 0, 0, 0 )
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
+[connection signal="timeout" from="Hurtbox/FlashTimer" to="." method="_on_FlashTimer_timeout"]
 
 [editable path="HitboxPivot/SwordHitbox"]
 [editable path="Hurtbox"]

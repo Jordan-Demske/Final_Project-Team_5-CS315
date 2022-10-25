@@ -28,7 +28,7 @@ onready var _animationPlayer := $AnimationPlayer
 onready var _animationTree := $AnimationTree
 onready var _hurtbox := $Hurtbox
 onready var _animationState = _animationTree.get("parameters/playback")
-
+onready var _flashTimer = $Hurtbox/FlashTimer
 
 func _ready():
 	self.set_max_health(self.max_health)
@@ -113,6 +113,15 @@ func _on_Hurtbox_area_entered(area):
 	self.health -= area.damage
 	_hurtbox.start_invincibility(1)
 	_hurtbox.create_hit_effect(area)
+	flash()
+
+func flash():
+	$Sprite.material.set_shader_param("flash_modifier", 1)
+	_flashTimer.start()
+
+
+func _on_FlashTimer_timeout():
+	$Sprite.material.set_shader_param("flash_modiefier", 0)
 
 
 func set_max_health(value):
