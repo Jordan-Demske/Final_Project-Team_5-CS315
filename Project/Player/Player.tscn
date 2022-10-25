@@ -16,8 +16,8 @@
 [sub_resource type="ShaderMaterial" id=50]
 resource_local_to_scene = true
 shader = ExtResource( 12 )
-shader_param/flash_color = Color( 1, 0, 0, 1 )
-shader_param/flash_modifier = 0.753
+shader_param/flash_color = Color( 0.862745, 0.196078, 0.196078, 1 )
+shader_param/flash_modifier = 0.75
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 1.0
@@ -700,6 +700,7 @@ texture = ExtResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="."]
 material = SubResource( 50 )
+use_parent_material = true
 position = Vector2( 0, -5 )
 texture = ExtResource( 3 )
 hframes = 32
@@ -787,7 +788,6 @@ stream = ExtResource( 11 )
 
 [node name="Light2D" type="Light2D" parent="."]
 light_mask = 3
-enabled = false
 texture = ExtResource( 10 )
 texture_scale = 2.0
 color = Color( 0.894118, 0.686275, 0.501961, 1 )
